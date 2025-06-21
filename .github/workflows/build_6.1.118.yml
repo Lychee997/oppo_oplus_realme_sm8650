@@ -32,11 +32,6 @@ on:
         options:
           - 'true'
           - 'false'
-      kernel_suffix:
-        description: '内核后缀(留空默认,开头别加连字符)'
-        required: false
-        type: string
-        default: ''
       kernel_kpm:
         description: '是否需要kpm'
         required: false
@@ -45,6 +40,11 @@ on:
         options:
           - 'true'
           - 'false'
+      kernel_suffix:
+        description: '内核后缀(留空默认,开头别加连字符)'
+        required: false
+        type: string
+        default: ''
 
 jobs:
   build:
