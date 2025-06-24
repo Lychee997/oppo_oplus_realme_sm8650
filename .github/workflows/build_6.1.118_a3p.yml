@@ -110,7 +110,18 @@ jobs:
          sed -i '$s|echo "\$res"|echo "${{ github.event.inputs.kernel_suffix }}"|' kernel_platform/common/scripts/setlocalversion            
          sed -i '$s|echo "\$res"|echo "${{ github.event.inputs.kernel_suffix }}"|' kernel_platform/msm-kernel/scripts/setlocalversion
          sed -i '$s|echo "\$res"|echo "${{ github.event.inputs.kernel_suffix }}"|' kernel_platform/external/dtc/scripts/setlocalversion
-      
+      - name: 初始化源码仓库
+        run: |
+          rm -rf kernel_workspace && mkdir kernel_workspace && cd kernel_workspace
+          echo "正在克隆源码仓库..."
+          repo init -u https://github.com/Lychee997/kernel_manifest.git -b refs/heads/oneplus/sm8650 -m oneplus_ace3_pro_v.xml --depth=1 common
+          echo "正在去除 ABI 保护 & 去除 dirty 后缀..."
+          rm common/android/abi_gki_protected_exports_* || true
+          for f in common/scripts/setlocalversion; do
+            sed -i 's/ -dirty//g' "$f"
+            sed -i '$i res=$(echo "$res" | sed '\''s/-dirty//g'\'')' "$f"
+          done
+          
       - name: 添加 SukiSU-Ultra
         id: ksu_version
         run: |
