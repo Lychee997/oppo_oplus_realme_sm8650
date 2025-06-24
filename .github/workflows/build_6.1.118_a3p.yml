@@ -261,7 +261,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Kernel_ZIP_Artifacts
-          path: ${{ github.workspace }}/kernel_workspace/*.zip
+          path: ${{ github.workspace }}/kernel_workspace/kernel_platform/*.zip
 
   release:
     needs: build
