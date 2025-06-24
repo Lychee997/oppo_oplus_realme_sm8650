@@ -78,7 +78,7 @@ jobs:
           echo "正在克隆源码仓库..."
           git clone --depth=1 https://github.com/Lychee997/android_kernel_common_oneplus_sm8650 -b oneplus/sm8650_v_15.0.0_ace_3_pro
           echo "正在去除 ABI 保护 & 去除 dirty 后缀..."
-        #  rm common/android/abi_gki_protected_exports_* || true
+          rm common/android/abi_gki_protected_exports_* || true
          # for f in common/scripts/setlocalversion; do
           #  sed -i 's/ -dirty//g' "$f"
            # sed -i '$i res=$(echo "$res" | sed '\''s/-dirty//g'\'')' "$f"
