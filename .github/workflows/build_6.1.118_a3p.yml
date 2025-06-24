@@ -161,7 +161,7 @@ jobs:
           
       - name: 添加 SUSFS 配置设置
         run: |
-          cd kernel_workspace
+          cd kernel_workspace/kernel_platform
           echo "CONFIG_KSU=y" >> ./common/arch/arm64/configs/gki_defconfig
           if [[ "${{ github.event.inputs.kernel_kpm }}" == "true" ]]; then
             echo "CONFIG_KPM=y" >> ./common/arch/arm64/configs/gki_defconfig
