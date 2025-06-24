@@ -84,7 +84,7 @@ jobs:
       - name: 📥 Initialize repo and sync (克隆内核源码)
         run: |
          mkdir kernel_workspace && cd kernel_workspace
-         repo init -u https://github.com/Lychee997/kernel_manifest.git -b oneplus_ace3pro_v.xml --depth=1
+         repo init -u https://github.com/Lychee997/kernel_manifest.git -b refs/heads/oneplus_ace3pro_v.xml --depth=1
          repo sync -c -j$(nproc --all) --no-tags --no-clone-bundle --force-sync
          rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
          rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
