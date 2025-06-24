@@ -96,7 +96,7 @@ jobs:
 
       - name: 初始化源码仓库
         run: |
-          rm -rf kernel_workspace && mkdir kernel_workspace && cd kernel_workspace
+          mkdir kernel_workspace && cd kernel_workspace
           echo "正在克隆源码仓库..."
           repo init -u https://github.com/Lychee997/kernel_manifest.git -b refs/heads/oneplus/sm8650 -m oneplus_ace3_pro_v.xml --depth=1
           echo "正在去除 ABI 保护 & 去除 dirty 后缀..."
@@ -116,7 +116,7 @@ jobs:
       - name: 添加 SukiSU-Ultra
         id: ksu_version
         run: |
-          cd kernel_workspace
+          cd kernel_workspace/kernel_platform
           #if [[ "${{ env.KERNELSU_VARIANT }}" == "SukiSU-Ultra" ]]; then
           #  echo "BRANCH='-s susfs-main'" >> $GITHUB_ENV
           #fi
@@ -130,7 +130,7 @@ jobs:
 
       - name: 应用 SUSFS 修补程序 SukiSU-Ultra
         run: |
-          cd kernel_workspace
+          cd kernel_workspace/kernel_platform
           git clone https://github.com/ShirkNeko/susfs4ksu.git -b gki-${{ env.ANDROID_VERSION }}-${{ env.KERNEL_VERSION }}
           git clone https://github.com/ShirkNeko/SukiSU_patch.git
           cp ./susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ env.ANDROID_VERSION }}-${{ env.KERNEL_VERSION }}.patch ./common/
@@ -143,7 +143,7 @@ jobs:
 
       - name: 应用 Hide Stuff 修补程序
         run: |
-          cd kernel_workspace/common
+          cd kernel_workspace/kernel_platform/common
           cp ../SukiSU_patch/69_hide_stuff.patch ./
           patch -p1 < 69_hide_stuff.patch
 
@@ -160,7 +160,7 @@ jobs:
           
       - name: 添加 SUSFS 配置设置
         run: |
-          cd kernel_workspace
+          cd kernel_workspace/kernel_platform
           echo "CONFIG_KSU=y" >> ./common/arch/arm64/configs/gki_defconfig
           if [[ "${{ github.event.inputs.kernel_kpm }}" == "true" ]]; then
             echo "CONFIG_KPM=y" >> ./common/arch/arm64/configs/gki_defconfig
@@ -200,7 +200,7 @@ jobs:
 
       - name: 添加制作名称
         run: |
-          cd kernel_workspace
+          cd kernel_workspace/kernel_platform
           echo "替换内核版本后缀..."
           if [[ -n "${{ github.event.inputs.kernel_suffix }}" ]]; then
             echo "当前内核版本后缀：${{ github.event.inputs.kernel_suffix }}"
@@ -216,7 +216,7 @@ jobs:
            
       - name: 构建内核
         run: |
-          cd kernel_workspace
+          cd kernel_workspace/kernel_platform
           if [[ ${{ github.event.inputs.scx_enable }} == "true" ]]; then
             git clone https://github.com/cctv18/sched_ext.git
             rm -rf ./sched_ext/.git
@@ -229,7 +229,7 @@ jobs:
          
       - name: 应用patch_linux并修补内核
         run: |
-          cd kernel_workspace/common/out/arch/arm64/boot
+          cd kernel_workspace/kernel_platform/common/out/arch/arm64/boot
           curl -LO https://github.com/ShirkNeko/SukiSU_KernelPatch_patch/releases/download/0.12.0/patch_linux
           chmod +x patch_linux
           ./patch_linux
@@ -238,7 +238,7 @@ jobs:
           
       - name: 克隆 AnyKernel3 并打包
         run: |
-          cd kernel_workspace
+          cd kernel_workspace/kernel_platform
           git clone https://github.com/Lychee997/AnyKernel3 --depth=1
           rm -rf ./AnyKernel3/.git
           cd AnyKernel3
