@@ -100,11 +100,18 @@ jobs:
           echo "正在克隆源码仓库..."
           repo init -u https://github.com/Lychee997/kernel_manifest.git -b refs/heads/oneplus/sm8650 -m oneplus_ace3_pro_v.xml --depth=1
           echo "正在去除 ABI 保护 & 去除 dirty 后缀..."
-          rm kernel_platform/common/android/abi_gki_protected_exports_* || true
-          for f in kernel_platform/common/scripts/setlocalversion; do
-            sed -i 's/ -dirty//g' "$f"
-            sed -i '$i res=$(echo "$res" | sed '\''s/-dirty//g'\'')' "$f"
-          done
+          repo sync -c -j$(nproc --all) --no-tags --no-clone-bundle --force-sync
+          rm kernel_platform/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
+          rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
+          sed -i 's/ -dirty//g' kernel_platform/common/scripts/setlocalversion
+          sed -i 's/ -dirty//g' kernel_platform/msm-kernel/scripts/setlocalversion
+          sed -i 's/ -dirty//g' kernel_platform/external/dtc/scripts/setlocalversion
+          sed -i '$i res=$(echo "$res" | sed '\''s/-dirty//g'\'')' kernel_platform/common/scripts/setlocalversion
+          sed -i '$i res=$(echo "$res" | sed '\''s/-dirty//g'\'')' kernel_platform/msm-kernel/scripts/setlocalversion
+          sed -i '$i res=$(echo "$res" | sed '\''s/-dirty//g'\'')' kernel_platform/external/dtc/scripts/setlocalversion
+          sed -i '$s|echo "\$res"|echo "${{ github.event.inputs.kernel_suffix }}"|' kernel_platform/common/scripts/setlocalversion            
+          sed -i '$s|echo "\$res"|echo "${{ github.event.inputs.kernel_suffix }}"|' kernel_platform/msm-kernel/scripts/setlocalversionAdd commentMore actions
+          sed -i '$s|echo "\$res"|echo "${{ github.event.inputs.kernel_suffix }}"|' kernel_platform/external/dtc/scripts/setlocalversion
           
       - name: 添加 SukiSU-Ultra
         id: ksu_version
