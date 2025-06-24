@@ -134,10 +134,10 @@ jobs:
           git clone https://github.com/ShirkNeko/susfs4ksu.git -b gki-${{ env.ANDROID_VERSION }}-${{ env.KERNEL_VERSION }}
           git clone https://github.com/ShirkNeko/SukiSU_patch.git
           cd kernel_platform
-          cp ./susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ env.ANDROID_VERSION }}-${{ env.KERNEL_VERSION }}.patch ./common/
-          cp ./susfs4ksu/kernel_patches/fs/* ./common/fs/
-          cp ./susfs4ksu/kernel_patches/include/linux/* ./common/include/linux/
-          cp ./SukiSU_patch/hooks/syscall_hooks.patch ./common/
+          cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ env.ANDROID_VERSION }}-${{ env.KERNEL_VERSION }}.patch ./common/
+          cp ../susfs4ksu/kernel_patches/fs/* ./common/fs/
+          cp ../susfs4ksu/kernel_patches/include/linux/* ./common/include/linux/
+          cp ../SukiSU_patch/hooks/syscall_hooks.patch ./common/
           cd ./common
           patch -p1 < 50_add_susfs_in_gki-${{ env.ANDROID_VERSION }}-${{ env.KERNEL_VERSION }}.patch || true
           patch -p1 < syscall_hooks.patch
