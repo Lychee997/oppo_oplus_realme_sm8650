@@ -1,4 +1,4 @@
-name: 欧加真 6.1.118_ace3pro Android 15 通用OKI内核
+name: 欧加真 6.1.118_ace3pro1 Android 15 通用OKI内核
 
 env:
   TZ: Asia/Shanghai
@@ -96,7 +96,7 @@ jobs:
 
       - name: 初始化源码仓库
         run: |
-          rm -rf kernel_workspace && mkdir kernel_workspace && cd kernel_workspace
+          mkdir kernel_workspace && cd kernel_workspace
           echo "正在克隆源码仓库..."
           repo init -u https://github.com/Lychee997/kernel_manifest.git -b refs/heads/oneplus/sm8650 -m oneplus_ace3_pro_v.xml --depth=1
           
