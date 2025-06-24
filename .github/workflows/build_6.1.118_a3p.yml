@@ -96,7 +96,7 @@ jobs:
 
       - name: 初始化源码仓库
         run: |
-          mkdir kernel_workspace && cd kernel_workspace
+          rm -rf kernel_workspace && mkdir kernel_workspace && cd kernel_workspace
           echo "正在克隆源码仓库..."
           repo init -u https://github.com/Lychee997/kernel_manifest.git -b refs/heads/oneplus/sm8650 -m oneplus_ace3_pro_v.xml --depth=1
           echo "正在去除 ABI 保护 & 去除 dirty 后缀..."
