@@ -201,7 +201,7 @@ jobs:
 
       - name: 添加制作名称
         run: |
-          cd kernel_workspace
+          cd kernel_workspace/kernel_platform
           echo "替换内核版本后缀..."
           if [[ -n "${{ github.event.inputs.kernel_suffix }}" ]]; then
             echo "当前内核版本后缀：${{ github.event.inputs.kernel_suffix }}"
@@ -217,7 +217,7 @@ jobs:
            
       - name: 构建内核
         run: |
-          cd kernel_workspace
+          cd kernel_workspace/kernel_platform
           if [[ ${{ github.event.inputs.scx_enable }} == "true" ]]; then
             git clone https://github.com/cctv18/sched_ext.git
             rm -rf ./sched_ext/.git
