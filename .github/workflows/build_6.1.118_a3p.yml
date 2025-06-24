@@ -62,7 +62,12 @@ jobs:
           remove-android: 'true'
           remove-haskell: 'true'
           remove-codeql: 'true'
-
+          
+      - name: 📦 Configure Git (设置下载账户)
+        run: |
+         git config --global user.name "bulid"
+         git config --global user.email "1537088914@qq.com"
+            
       - name: 安装配置环境依赖
         run: |
           sudo apt update && sudo apt upgrade -y
@@ -74,6 +79,14 @@ jobs:
           sudo apt update && sudo apt upgrade -y
           sudo apt install -y python3 git curl
           sudo apt install -y python3 git curl ccache
+
+      - name: 📥 Restore ccache (恢复 ccache 缓存)
+        uses: actions/cache@v3
+        with:
+          path: /home/runner/.ccache
+          key: ccache-${{ runner.os }}-${{ github.ref }}
+          restore-keys: |
+            ccache-${{ runner.os }}-
 
       - name: 📥 Install repo tool (下载repo工具)
         run: |
