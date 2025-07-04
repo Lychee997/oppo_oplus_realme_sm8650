@@ -15,7 +15,7 @@ on:
 #    - cron: '0 23 * * *'  # UTC时间23点（北京时间次日7点）
     inputs:
       lz4_enable:
-        description: '是否安装 LZ4 + zstd 补丁'
+        description: '是否安装 LZ4 + ZSTD 补丁'
         required: true
         type: choice
         default: 'true'
@@ -200,7 +200,7 @@ jobs:
             - 内核版本号: ${{ env.FULL_VERSION }}
             - 编译时间: ${{ env.TIME_FORM }}
             - 机型：欧加真骁龙8Gen3 6.1 Android 15内核通用（基于一加12 Android 15 版官方OKI源码）
-            - LZ4K +ZSTD补丁：${{ github.event.inputs.lz4_enable }}
+            - LZ4K + ZSTD补丁：${{ github.event.inputs.lz4_enable }}
             - 推荐系统：ColorOS 15 / RealmeUI 6.0
             ### 📋 安装方法 | Installation Guide
             1. 若你的手机已经安装了第三方Recovery（如TWRP)，可下载对应机型的AnyKernel刷机包后进入Recovery模式，通过Recovery刷入刷机包后重启设备
