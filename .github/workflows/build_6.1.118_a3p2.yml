@@ -14,7 +14,7 @@ on:
 #  schedule:
 #    - cron: '0 23 * * *'  # UTC时间23点（北京时间次日7点）
     inputs:
-      lz4k_enable:
+      lz4_enable:
         description: '是否安装 LZ4 + zstd 补丁'
         required: true
         type: choice
